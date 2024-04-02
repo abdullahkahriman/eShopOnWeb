@@ -52,7 +52,7 @@ public class OrderItemListPagedEndpoint : IEndpoint<IResult, ListPagedOrderItemR
             OrderDate = c.OrderDate,
             TotalPrice = c.Total(),
             Username = c.BuyerId,
-            StatusName = "Pending"
+            StatusName = Enum.GetName(typeof(OrderStatus), c.StatusName)
         }));
 
 

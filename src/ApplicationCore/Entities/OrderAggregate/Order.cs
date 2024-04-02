@@ -5,10 +5,17 @@ using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate;
 
+public enum OrderStatus
+{
+    Pending = 0,
+    Shipped = 1,
+    Delivered = 2
+}
+
 public class Order : BaseEntity, IAggregateRoot
 {
-    #pragma warning disable CS8618 // Required by Entity Framework
-    private Order() {}
+#pragma warning disable CS8618 // Required by Entity Framework
+    private Order() { }
 
     public Order(string buyerId, Address shipToAddress, List<OrderItem> items)
     {
@@ -19,6 +26,7 @@ public class Order : BaseEntity, IAggregateRoot
         _orderItems = items;
     }
 
+    public OrderStatus StatusName { get; private set; } = OrderStatus.Pending;
     public string BuyerId { get; private set; }
     public DateTimeOffset OrderDate { get; private set; } = DateTimeOffset.Now;
     public Address ShipToAddress { get; private set; }
