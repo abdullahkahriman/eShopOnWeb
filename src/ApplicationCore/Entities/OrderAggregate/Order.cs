@@ -52,4 +52,9 @@ public class Order : BaseEntity, IAggregateRoot
         }
         return total;
     }
+
+    public void SetStatus(OrderStatus status)
+    {
+        StatusName = status;
+    }
 }

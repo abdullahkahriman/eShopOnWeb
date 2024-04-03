@@ -10,7 +10,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Details</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -53,10 +53,16 @@
 
 			</div>
 			<div class="modal-footer">
-				@* <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="Close">Close</button> *@
-				@* <button class="btn btn-primary" @onclick="EditClick">
-				Edit
-				</button> *@
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="Close">Close</button>
+				<button class="btn btn-success" @onclick="UpdateStatus">
+					Approved
+				</button>
+				@if (!string.IsNullOrWhiteSpace(resultMsg))
+				{
+					<div class="alert alert-info" role="alert">
+						@resultMsg
+					</div>
+				}
 			</div>
 		</div>
 	</div>
@@ -76,22 +82,35 @@
 	private bool _showDetailsModal = false;
 	private List<OrderItemDetail> _items = new();
 
+	string resultMsg = "";
+
 	// public async Task EditClick()
 	//    {
 	//        await OnEditClick.InvokeAsync(_item.Id);
 	//        await Close();
 	//    }
 
-	public async Task Open(int id)
+	private async Task UpdateStatus()
+	{
+		bool result = await OrderItemService.UpdateStatus(new() { Id = _items.FirstOrDefault().Id });
+		if (result)
+		{
+			resultMsg = "Statü güncellendi";
+		}
+		else
+		{
+			resultMsg = "Statü güncellenirken bir hata oluştu";
+		}
+	}
+
+	public async Task Open(int orderId)
 	{
 
-		Logger.LogInformation("Now loading2... /Order/Details/{Id}", id);
+		Logger.LogInformation("Now loading2... /Order/Details/{Id}", orderId);
 
 		await new Css(JSRuntime).HideBodyOverflow();
 
-		_items = await OrderItemService.GetById(id);
-
-		Console.WriteLine("name: " + _items?.FirstOrDefault()?.Name);
+		_items = await OrderItemService.GetById(orderId);
 
 		_modalDisplay = "block;";
 		_modalClass = "Show";
