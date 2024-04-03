@@ -12,3 +12,11 @@ public class OrderItem
     public int Units { get; set; }
     public string StatusName { get; set; }
 }
+
+public class OrderItemDetail
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Unit { get; set; }
+    public decimal Price { get; set; }
+}

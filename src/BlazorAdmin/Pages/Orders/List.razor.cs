@@ -13,6 +13,8 @@ public partial class List : BlazorComponent
 
     private List<OrderItem> orderItems = new();
 
+    private Details DetailsComponent { get; set; }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -29,5 +31,10 @@ public partial class List : BlazorComponent
     {
         orderItems = await OrderItemService.List();
         StateHasChanged();
+    }
+
+    private async void DetailsClick(int id)
+    {
+        await DetailsComponent.Open(id);
     }
 }
