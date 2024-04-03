@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ardalis.GuardClauses;
+using BlazorShared;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate;
 
-public enum OrderStatus
-{
-    Pending = 0,
-    Shipped = 1,
-    Delivered = 2
-}
 
 public class Order : BaseEntity, IAggregateRoot
 {

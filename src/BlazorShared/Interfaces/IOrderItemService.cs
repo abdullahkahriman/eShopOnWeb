@@ -8,6 +8,6 @@ public interface IOrderItemService
 {
     Task<List<OrderItemDetail>> GetById(int id);
     Task<List<OrderItem>> ListPaged(int pageSize);
-    Task<bool> UpdateStatus(OrderItem orderItem);
+    Task<bool> UpdateStatus(UpdateOrderItemStatusRequest orderItem);
     Task<List<OrderItem>> List();
 }

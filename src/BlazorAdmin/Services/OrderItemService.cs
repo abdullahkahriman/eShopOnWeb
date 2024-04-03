@@ -38,7 +38,7 @@ public class OrderItemService : IOrderItemService
         return items;
     }
 
-    public async Task<bool> UpdateStatus(OrderItem orderItem)
+    public async Task<bool> UpdateStatus(UpdateOrderItemStatusRequest orderItem)
     {
         return (await _httpService.HttpPut<UpdateOrderItemStatusResponse>("update-status", orderItem)).IsSuccess;
     }

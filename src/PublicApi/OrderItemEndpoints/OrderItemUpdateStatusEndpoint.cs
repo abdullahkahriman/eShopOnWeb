@@ -35,7 +35,7 @@ public class OrderItemUpdateStatusEndpoint : IEndpoint<IResult, UpdateStatusOrde
             response.IsSuccess = false;
         else
         {
-            item.SetStatus(OrderStatus.Delivered);
+            item.SetStatus(request.StatusName);
             await itemRepository.UpdateAsync(item);
             await itemRepository.SaveChangesAsync();
 

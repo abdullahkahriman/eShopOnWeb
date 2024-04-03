@@ -54,8 +54,14 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="Close">Close</button>
+				<select class="form-control" @bind="@selectedValue">
+					<option value="0">Pending</option>
+					<option value="1">Shipped</option>
+					<option value="2">Delivered</option>
+				</select>
+
 				<button class="btn btn-success" @onclick="UpdateStatus">
-					Approved
+					Update
 				</button>
 				@if (!string.IsNullOrWhiteSpace(resultMsg))
 				{
@@ -74,25 +80,17 @@
 }
 
 @code {
-	// [Parameter]
-	// public EventCallback<int> OnEditClick { get; set; }
-
 	private string _modalDisplay = "none;";
 	private string _modalClass = "";
 	private bool _showDetailsModal = false;
 	private List<OrderItemDetail> _items = new();
 
 	string resultMsg = "";
-
-	// public async Task EditClick()
-	//    {
-	//        await OnEditClick.InvokeAsync(_item.Id);
-	//        await Close();
-	//    }
+	private int selectedValue = 0;
 
 	private async Task UpdateStatus()
 	{
-		bool result = await OrderItemService.UpdateStatus(new() { Id = _items.FirstOrDefault().Id });
+		bool result = await OrderItemService.UpdateStatus(new() { Id = _items.FirstOrDefault().Id, StatusName = (BlazorShared.OrderStatus)selectedValue });
 		if (result)
 		{
 			resultMsg = "Statü güncellendi";
@@ -126,6 +124,8 @@
 		_modalDisplay = "none";
 		_modalClass = "";
 		_showDetailsModal = false;
+		resultMsg = "";
+		selectedValue = 0;
 	}
 
 }
